@@ -10,11 +10,12 @@ export default function ThreeScene() {
   const [openPanels, setOpenPanels] = useState<number[]>([]);
   const [dynamicText, setDynamicText] = useState<string>("Загрузка...");
   const [dynamicText1, setDynamicText1] = useState<string>("Загрузка...");
+  const [dynamicText2, setDynamicText2] = useState<string>("Загрузка...");
 
   const panelData: Record<number, { title: string; text: string }> = {
     1: { title: "Kills", text: dynamicText },
     2: { title: "Players", text: dynamicText1 },
-    3: { title: "чтото", text: "чтото" },
+    3: { title: "Matches", text: dynamicText2 },
     4: { title: "чтото", text: "чтото" },
     5: { title: "чтото", text: "чтото" },
     6: { title: "чтото", text: "чтото" },
@@ -31,7 +32,6 @@ export default function ThreeScene() {
         try {
           const res = await axios.get("http://127.0.0.1:5000/kills");
           setDynamicText(`Текущие киллы: ${JSON.stringify(res.data, null, 2)}`);
-          console.log(res.data)
         } 
         catch (err) {
           setDynamicText("Ошибка получения данных с сервера");
@@ -46,10 +46,23 @@ export default function ThreeScene() {
         try {
           const res = await axios.get("http://127.0.0.1:5000/players");
           setDynamicText1(`Количество всех игроков: ${JSON.stringify(res.data, null, 2)}`);
-          console.log(res.data)
         } 
         catch (err) {
-          setDynamicText("Ошибка получения данных с сервера");
+          setDynamicText1("Ошибка получения данных с сервера");
+        }
+      };
+
+      fetchData();
+      interval = setInterval(fetchData, 5000);
+    }
+    if (openPanels.includes(3)) {
+      const fetchData = async () => {
+        try {
+          const res = await axios.get("http://127.0.0.1:5000/matches");
+          setDynamicText2(`Количество всех матчей: ${JSON.stringify(res.data, null, 2)}`);
+        } 
+        catch (err) {
+          setDynamicText2("Ошибка получения данных с сервера");
         }
       };
 
