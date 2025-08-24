@@ -11,12 +11,13 @@ export default function ThreeScene() {
   const [dynamicText, setDynamicText] = useState<string>("Загрузка...");
   const [dynamicText1, setDynamicText1] = useState<string>("Загрузка...");
   const [dynamicText2, setDynamicText2] = useState<string>("Загрузка...");
+  const [dynamicText3, setDynamicText3] = useState<string>("Загрузка...");
 
   const panelData: Record<number, { title: string; text: string }> = {
     1: { title: "Kills", text: dynamicText },
     2: { title: "Players", text: dynamicText1 },
     3: { title: "Matches", text: dynamicText2 },
-    4: { title: "чтото", text: "чтото" },
+    4: { title: "Топ Карт", text: dynamicText3 },
     5: { title: "чтото", text: "чтото" },
     6: { title: "чтото", text: "чтото" },
     7: { title: "чтото", text: "чтото" },
@@ -68,6 +69,31 @@ export default function ThreeScene() {
 
       fetchData();
       interval = setInterval(fetchData, 5000);
+    }
+    if (openPanels.includes(4)) {
+      const fetchData = async () => {
+        try {
+          const res = await axios.get("http://127.0.0.1:5000/top_maps");
+          const data = res.data;
+          const formattedText1 = `
+                🥇 ${data["1."]}
+      `.trim();
+          const formattedText2 = `
+                🥈 ${data["2."]}
+      `.trim();
+          const formattedText3 = `
+                🥉 ${data["3."]}
+      `.trim();
+          
+          setDynamicText3(`Топ 3 карты: ${formattedText1}\n ${formattedText2}\n ${formattedText3}`);
+        } 
+        catch (err) {
+          setDynamicText3("Ошибка получения данных с сервера");
+        }
+      };
+
+      fetchData();
+      interval = setInterval(fetchData, 600000);
     }
 
     return () => {
