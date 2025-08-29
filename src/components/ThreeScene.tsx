@@ -33,7 +33,7 @@ export default function ThreeScene() {
     if (openPanels.includes(1)) {
       const fetchData = async () => {
         try {
-          const res = await axios.get("http://127.0.0.1:5000/kills");
+          const res = await axios.get("http://127.0.0.1:8000/kills");
           setDynamicText(`Текущие киллы: ${JSON.stringify(res.data, null, 2)}`);
         } 
         catch (err) {
@@ -47,7 +47,7 @@ export default function ThreeScene() {
     if (openPanels.includes(2)) {
       const fetchData = async () => {
         try {
-          const res = await axios.get("http://127.0.0.1:5000/players");
+          const res = await axios.get("http://127.0.0.1:8000/players");
           setDynamicText1(`Количество всех игроков: ${JSON.stringify(res.data, null, 2)}`);
         } 
         catch (err) {
@@ -61,7 +61,7 @@ export default function ThreeScene() {
     if (openPanels.includes(3)) {
       const fetchData = async () => {
         try {
-          const res = await axios.get("http://127.0.0.1:5000/matches");
+          const res = await axios.get("http://127.0.0.1:8000/matches");
           setDynamicText2(`Количество всех матчей: ${JSON.stringify(res.data, null, 2)}`);
         } 
         catch (err) {
@@ -75,7 +75,7 @@ export default function ThreeScene() {
     if (openPanels.includes(4)) {
       const fetchData = async () => {
         try {
-          const res = await axios.get("http://127.0.0.1:5000/top_maps");
+          const res = await axios.get("http://127.0.0.1:8000/top_maps");
           const data = res.data;
           const formattedText1 = `
                 🥇 ${data["1."]}
@@ -102,7 +102,7 @@ export default function ThreeScene() {
     if (openPanels.includes(5)) {
       const fetchData = async () => {
         try {
-          const res = await axios.get("http://127.0.0.1:5000/top_weapon");
+          const res = await axios.get("http://127.0.0.1:8000/top_weapon");
           const data = res.data;
           const formattedText1 = `
                 🥇 ${data["1."]}
